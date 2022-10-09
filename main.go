@@ -4,26 +4,21 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
+	"server/handlers"
+	"server/utils"
 
 	"github.com/gorilla/mux"
 )
 
-const URI = "mongodb+srv://DrakoMaster:xnkKnbYuGbGVegXP@drako-db.fguhd.mongodb.net/?retryWrites=true&w=majority"
-
 func main() {
 	muxer := mux.NewRouter()
 
-	muxer.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, URI)
-	})
+	muxer.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { fmt.Fprintln(w, "Hola mundo") })
+	muxer.HandleFunc("/api/v0/createClient/", nil)
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "3300"
-	}
-	fmt.Printf("uri: %s\n", URI)
-	port = ":" + port
-	log.Fatal(http.ListenAndServe(port, muxer))
+	handlers.CreateCli()
+	handlers.ValidatePass()
+
+	log.Fatal(http.ListenAndServe(utils.GetPort(), muxer))
 
 }
