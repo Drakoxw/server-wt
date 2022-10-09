@@ -18,11 +18,17 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+	URI := os.Getenv("DB_URI")
+
+	muxer.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, URI)
+	})
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3300"
 	}
-	fmt.Printf("uri: %s\n", os.Getenv("DB_URI"))
+	fmt.Printf("uri: %s\n", URI)
 	port = ":" + port
 	log.Fatal(http.ListenAndServe(port, muxer))
 
