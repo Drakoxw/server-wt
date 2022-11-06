@@ -3,6 +3,7 @@ package utils
 import "os"
 
 const (
+	URI       = "mongodb+srv://DrakoMaster:xnkKnbYuGbGVegXP@drako-db.fguhd.mongodb.net/?retryWrites=true&w=majority"
 	MONGO_DB  = "Go_Test"
 	CLIENTS   = "Clients"
 	PROVIDERS = "Providers"
