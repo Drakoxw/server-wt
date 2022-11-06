@@ -12,6 +12,7 @@ import (
 )
 
 func Holamundo(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.Header.Get("Role"))
 	fmt.Fprintln(w, "Hola mundo")
 }
 
