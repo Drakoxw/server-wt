@@ -42,6 +42,16 @@ func IsAuthorized(handler http.HandlerFunc) http.HandlerFunc {
 		}
 
 		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+
+			audHttp := utils.ToStringInterface(claims["aud"])
+			if !utils.ValidateOrigin(audHttp) {
+				utils.BadResponse(w, utils.RespBad{
+					Message:    "Origin token no valid",
+					StatusCode: http.StatusForbidden,
+				})
+				return
+			}
+
 			if claims["role"] == "admin" {
 				r.Header.Set("Role", "admin")
 				handler.ServeHTTP(w, r)

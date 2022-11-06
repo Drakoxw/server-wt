@@ -39,6 +39,10 @@ func GenerateJWT(email, user, role string) (string, error) {
 	return tokenString, nil
 }
 
+func ValidateOrigin(audHttp string) bool {
+	return audHttp == Aud()
+}
+
 func Aud() string {
 	aud := ""
 	host, _ := os.Hostname()
