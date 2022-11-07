@@ -52,13 +52,11 @@ func IsAuthorized(handler http.HandlerFunc) http.HandlerFunc {
 				return
 			}
 
-			if claims["role"] == "admin" {
-				r.Header.Set("Role", "admin")
-				handler.ServeHTTP(w, r)
-				return
-
-			} else if claims["role"] == "user" {
-				r.Header.Set("Role", "user")
+			if claims["role"] != "" {
+				if nivel, ok := claims["privilegeLevel"]; ok {
+					r.Header.Set("privilegeLevel", utils.ToStringInterface(nivel))
+				}
+				r.Header.Set("Role", utils.ToStringInterface(claims["role"]))
 				handler.ServeHTTP(w, r)
 				return
 			}
