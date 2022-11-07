@@ -27,7 +27,7 @@ var htmlBody = `
 func SendEmail(w http.ResponseWriter) {
 	server := mail.NewSMTPClient()
 	server.Host = "smtp.gmail.com"
-	server.Port = 587
+	server.Port = 465
 	server.Username = user
 	server.Password = pass
 	server.Encryption = mail.EncryptionSTARTTLS
