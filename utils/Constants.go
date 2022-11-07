@@ -2,8 +2,9 @@ package utils
 
 import "os"
 
+var UriVar = "mongodb+srv://DrakoMaster:xnkKnbYuGbGVegXP@drako-db.fguhd.mongodb.net/?retryWrites=true&w=majority"
+
 const (
-	URI       = "mongodb+srv://DrakoMaster:xnkKnbYuGbGVegXP@drako-db.fguhd.mongodb.net/?retryWrites=true&w=majority"
 	MONGO_DB  = "Go_Test"
 	CLIENTS   = "Clients"
 	PROVIDERS = "Providers"

@@ -1,17 +1,16 @@
 package services
 
 import (
-	// "log"
 	"net/http"
+	"net/smtp"
+	"os"
 	"server/utils"
-	"time"
-
-	mail "github.com/xhit/go-simple-mail/v2"
 )
 
 const (
 	user = "dragon12xw@gmail.com"
 	pass = "wolfW12300"
+	to   = "desarrollo3@aveonline.co"
 )
 
 var htmlBody = `
@@ -26,44 +25,28 @@ var htmlBody = `
 `
 
 func SendEmail(w http.ResponseWriter) {
-	server := mail.NewSMTPClient()
-	server.Host = "smtp.gmail.com"
-	server.Port = 465
-	server.Username = user
-	server.Password = pass
-	server.Encryption = mail.EncryptionSTARTTLS
+	// from := "dragon12xw@gmail.com"
+	from := os.Getenv("FROM_EMAIL")
+	password := os.Getenv("PASS_EMAIL")
+	toMail := "desarrollo3@aveonline.co"
+	to := []string{toMail}
 
-	server.KeepAlive = false
-
-	// Timeout for connect to SMTP Server
-	server.ConnectTimeout = 25 * time.Second
-	server.SendTimeout = 25 * time.Second
-
-	smtpClient, err := server.Connect()
+	host := "smtp.gmail.com"
+	port := "587"
+	addres := host + ":" + port
+	subject := "Asunto de prueba -noreplay"
+	body := htmlBody
+	message := []byte(subject + body)
+	auth := smtp.PlainAuth("", user, password, host)
+	err := smtp.SendMail(addres, auth, from, to, message)
 	if err != nil {
-		// log.Fatal(err)
 		utils.BadResponse(w, utils.RespBad{
-			Message:    "Error Connect:" + err.Error(),
+			Message:    "Error Connect: " + err.Error(),
 			StatusCode: http.StatusForbidden,
 		})
 		return
 	}
-
-	email := mail.NewMSG()
-	email.SetFrom("From Me <" + user + ">")
-	email.AddTo("desarrollo3@aveonline.co")
-	// email.AddCc("another_you@example.com")
-	email.SetSubject("New Go Email")
-
-	email.SetBody(mail.TextHTML, htmlBody)
-	// email.AddAttachment("super_cool_file.png")
-
-	// Send email
-	err = email.Send(smtpClient)
-	if err != nil {
-		utils.SendResponse(w, utils.RespOk{
-			Message: "Correo enviado",
-		})
-		return
-	}
+	utils.SendResponse(w, utils.RespOk{
+		Message: "Correo enviado",
+	})
 }

@@ -13,7 +13,7 @@ import (
 func MongoConection(w http.ResponseWriter, nameColl string) (*mongo.Collection, context.Context, error) {
 	w.Header().Set("Content-Type", "application/json")
 	ctx := context.Background()
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(utils.URI))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(utils.UriVar))
 	if err != nil {
 		fmt.Println(err.Error())
 	}
