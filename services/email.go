@@ -4,6 +4,7 @@ import (
 	// "log"
 	"net/http"
 	"server/utils"
+	"time"
 
 	mail "github.com/xhit/go-simple-mail/v2"
 )
@@ -32,11 +33,17 @@ func SendEmail(w http.ResponseWriter) {
 	server.Password = pass
 	server.Encryption = mail.EncryptionSTARTTLS
 
+	server.KeepAlive = false
+
+	// Timeout for connect to SMTP Server
+	server.ConnectTimeout = 25 * time.Second
+	server.SendTimeout = 25 * time.Second
+
 	smtpClient, err := server.Connect()
 	if err != nil {
 		// log.Fatal(err)
 		utils.BadResponse(w, utils.RespBad{
-			Message:    "Error:" + err.Error(),
+			Message:    "Error Connect:" + err.Error(),
 			StatusCode: http.StatusForbidden,
 		})
 		return
@@ -54,9 +61,8 @@ func SendEmail(w http.ResponseWriter) {
 	// Send email
 	err = email.Send(smtpClient)
 	if err != nil {
-		utils.BadResponse(w, utils.RespBad{
-			Message:    err.Error(),
-			StatusCode: http.StatusForbidden,
+		utils.SendResponse(w, utils.RespOk{
+			Message: "Correo enviado",
 		})
 		return
 	}
