@@ -8,6 +8,11 @@ import (
 	mail "github.com/xhit/go-simple-mail/v2"
 )
 
+const (
+	user = "dragon12xw@gmail.com"
+	pass = "wolfW12300"
+)
+
 var htmlBody = `
 <html>
 <head>
@@ -23,22 +28,22 @@ func SendEmail(w http.ResponseWriter) {
 	server := mail.NewSMTPClient()
 	server.Host = "smtp.gmail.com"
 	server.Port = 587
-	server.Username = "dragon12xw@gmail.com"
-	server.Password = "wolfW12300"
-	server.Encryption = mail.EncryptionTLS
+	server.Username = user
+	server.Password = pass
+	server.Encryption = mail.EncryptionSTARTTLS
 
 	smtpClient, err := server.Connect()
 	if err != nil {
 		// log.Fatal(err)
 		utils.BadResponse(w, utils.RespBad{
-			Message:    err.Error(),
+			Message:    "Error:" + err.Error(),
 			StatusCode: http.StatusForbidden,
 		})
 		return
 	}
 
 	email := mail.NewMSG()
-	email.SetFrom("From Me <dragon12xw@gmail.com>")
+	email.SetFrom("From Me <" + user + ">")
 	email.AddTo("desarrollo3@aveonline.co")
 	// email.AddCc("another_you@example.com")
 	email.SetSubject("New Go Email")
