@@ -33,7 +33,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 				})
 			}
 		}
-		token, _ := utils.GenerateJWT(result.Email, result.UserName, result.Role)
+		token, _ := utils.GenerateJWT(result.Email, result.UserName, result.Role, r.Header)
 		response := fmt.Sprintf(`{
 				"token": "%s"
 			}`, token)

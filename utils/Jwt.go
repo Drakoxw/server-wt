@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"net"
+	"net/http"
 	"os"
 	"time"
 
@@ -19,7 +20,7 @@ type Token struct {
 
 var Secretkey = "UltraSecret"
 
-func GenerateJWT(email, user, role string) (string, error) {
+func GenerateJWT(email, user, role string, h http.Header) (string, error) {
 	var mySigningKey = []byte(Secretkey)
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
@@ -28,7 +29,7 @@ func GenerateJWT(email, user, role string) (string, error) {
 	claims["email"] = email
 	claims["role"] = role
 	claims["user"] = user
-	claims["aud"] = Aud()
+	claims["aud"] = Aud(h)
 	claims["exp"] = time.Now().Add(time.Hour * 8).Unix()
 
 	tokenString, err := token.SignedString(mySigningKey)
@@ -39,20 +40,28 @@ func GenerateJWT(email, user, role string) (string, error) {
 	return tokenString, nil
 }
 
-func ValidateOrigin(audHttp string) bool {
-	return audHttp == Aud()
+func ValidateOrigin(audHttp string, h http.Header) bool {
+	return audHttp == Aud(h)
 }
 
-func Aud() string {
+func Aud(h http.Header) string {
 	aud := ""
 	host, _ := os.Hostname()
 	addrs, _ := net.LookupIP(host)
+	aud += host
+
 	for _, addr := range addrs {
 		if ipv4 := addr.To4(); ipv4 != nil {
 			aud += ipv4.String() + ":" + addr.String() + ":"
 		}
 	}
-	aud += host
+
+	for k, v := range h {
+		if k == "X-Forwarded-For" || k == "X-Envoy-External-Address" {
+			aud += v[0]
+		}
+	}
+
 	hash := md5.Sum([]byte(aud))
 	return hex.EncodeToString(hash[:])
 }
