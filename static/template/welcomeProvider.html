@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bienvenid@</title>
+  <style>
+    @import url('http://fonts.cdnfonts.com/css/roboto');
+    @import url('http://fonts.cdnfonts.com/css/poppins');
+    * { padding: 0;margin: 0;box-sizing: border-box;color: #42484E;font-family: Roboto; }
+    main { 
+      padding: 1rem 3rem;
+    }
+    a { color: #42484E; font-weight: bolder; }
+    p { font-size: 16px; }
+    .text-center { text-align: center; }
+    .w-full{ width: 100%;}
+    .w-50 { width: 50%; }
+    .h-full { height: 100%; }
+    .font-bold { font-weight: 700;}
+    .center_all, .center-all { display: flex; justify-content: center;align-items: center; }
+    .red_ave { color: #c80935;}
+    .mt-3 { margin-top: 1rem; }
+    .mt-6 { margin-top: 2rem; }
+    .ml-3 { margin-left: 8px; }
+    .m-auto { margin: auto; display: flex; }
+    .boton {
+      height: 40px;
+      background-color: #c80935;
+      color: white;
+      border-radius: 20px;
+      border: 2px solid white;
+      padding: 0 2rem;
+      cursor: pointer;
+    }
+    .decorate-none { text-decoration: none; }
+    .boton:hover{ background-color: #B0052D; }
+    footer {
+      bottom: 0;
+      background-color: #C81437;
+      padding: 1.5rem 1rem;
+      flex-wrap: wrap;
+
+    }
+    .justify-between { justify-content: space-between; }
+    .foot {
+      display: flex;
+      align-items: center;
+      /* flex-wrap: wrap; */
+    }
+    .icons {
+      display: flex;
+      gap: 10px;
+    }
+    .face, .instag, .youtube {
+      height: 3rem;
+      width: 3rem;
+      background-color: white;
+      border-radius: 10px;
+    }
+    @media (max-width: 410px) {
+      .foot { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header class='w-full center_all'>
+  </header>
+  <main>
+    <h2>Hola, <span class="red_ave">{{.Provider}} y {{.Enterprise}}</span></h2>
+    <h1 class="text-center mt-3">¡ESTAMOS MUY FELICES DE TENERTE!</h1>
+    <br>
+    <p>
+      <span class="font-bold">Bienvenido a esta familia de empresarios y emprendedores del comercio turistico.</span>
+    </p>
+    <br>
+    <p>
+      Sabemos que crecer en el entorno digital implica grandes retos, 
+      <span class="font-bold">pero ahora gestionar tu logística no será un problema</span>, 
+      pues tendrás a tu disposición todas las herramientas tecnológicas necesarias, 
+      junto con nuestra asesoría y acompañamiento.
+    </p>
+    <h2 class="text-center mt-6">¡QUÉ FELICIDAD TRABAJAR JUNTOS!</h2>
+    <h3 class="text-center">¿Listo para empezar?</h3>
+
+    <div class="w-full center-all mt-3">
+      <a class="m-auto decorate-none" href="{{.Link}}" target="_blank" rel="noopener noreferrer">
+        <button class="boton">
+          COMIENZA AQUÍ
+        </button>
+      </a>
+    </div>
+  </main>
+  <footer class="w-full">
+    <div class="foot w-full justify-between">
+
+      <div class='icon_ave center-all'>
+        <a href='https://aveonline.co/site/'>
+          <img width='121' height='26' src='https://intranet.aveonline.co/wp-content/uploads/2020/09/Intranet-06-1.png'
+            class='attachment-full size-full' alt='' loading='lazy' />
+        </a>
+      </div>
+
+      <div class="w-full"></div>
+
+    </div>
+  </footer>
+</body>
+</html>

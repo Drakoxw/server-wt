@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"server/db"
 	"server/models/interfaces"
+	services "server/services/emails"
 	"server/utils"
 	"time"
 )
@@ -24,6 +25,7 @@ func CreateProvider(w http.ResponseWriter, r *http.Request) {
 		user.Pass = utils.HashPassword(user.Pass, utils.GenerateSalt(15))
 		user.Role = "provider"
 		user.PrivilegeLevel = 5
+		user.Verify = false
 		user.DateReg = current_time.Format("2006-01-01 15:04:05")
 		req, _ := collection.InsertOne(ctx, user)
 
@@ -34,6 +36,12 @@ func CreateProvider(w http.ResponseWriter, r *http.Request) {
 			"message": "Nuevo Registro",
 			"data":    insertedId,
 		}
+
+		go services.SendWelcomeProvider(
+			user.UserName,
+			user.Email,
+			utils.ToStringIdPrimite(req.InsertedID),
+			user.NameEnterprise)
 
 		enc := json.NewEncoder(w)
 		enc.SetIndent("", "  ")

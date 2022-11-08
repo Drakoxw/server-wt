@@ -18,6 +18,7 @@ type IProviderInsert struct {
 	Email          string `bson:"email"`
 	UserName       string `bson:"userName"`
 	Pass           string `bson:"pass"`
+	Verify         bool   `bson:"verify"`
 	City           string `bson:"city"`
 	NameEnterprise string `bson:"nameEnterprise"`
 	Role           string `bson:"role"`
