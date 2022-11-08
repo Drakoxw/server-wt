@@ -61,14 +61,14 @@ func CreatedResponse(w http.ResponseWriter, dataSend RespOk) {
 	response.Send()
 }
 
-func ResponseFile(w http.ResponseWriter, dataSend string) {
+func ResponseFile(w http.ResponseWriter, dataSend string, message string) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
 	dataResp := fmt.Sprintf(`{
 		"status": "ok",
-		"message": "Recurso encontrado",
+		"message": "%s",
 		"data": %s
-	}`, dataSend)
+	}`, message, dataSend)
 	fmt.Fprintln(w, dataResp)
 }
 

@@ -27,10 +27,14 @@ func main() {
 	muxer := mux.NewRouter()
 
 	muxer.HandleFunc("/", Holamundo)
+
 	muxer.HandleFunc("/api/v0/createClient/", handlers.CreateClient).Methods("POST")
 	muxer.HandleFunc("/api/v0/createProvider/", handlers.CreateProvider).Methods("POST")
+	muxer.HandleFunc("/api/v0/validateProvider/", handlers.ValidateAccountProvider).Methods("POST")
+
 	muxer.HandleFunc("/api/v0/login/", handlers.Login).Methods("POST")
 	muxer.HandleFunc("/api/v0/home/", middlerware.IsAuthorized(Holamundo))
+
 	muxer.HandleFunc("/api/", Req)
 
 	log.Fatal(http.ListenAndServe(utils.GetPort(), muxer))

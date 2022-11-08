@@ -15,7 +15,7 @@ func GetHttp(url string, w http.ResponseWriter) {
 	bodyBites, _ := json.Marshal(``)
 	response, err := processReq("GET", url, bodyBites, w)
 	if err == nil {
-		utils.ResponseFile(w, response)
+		utils.ResponseFile(w, response, "recurso encontrado")
 	}
 }
 
@@ -23,7 +23,7 @@ func PostHttp(url string, body any, w http.ResponseWriter) {
 	bodyBites, _ := json.Marshal(body)
 	response, err := processReq("POST", url, bodyBites, w)
 	if err == nil {
-		utils.ResponseFile(w, response)
+		utils.ResponseFile(w, response, "recurso encontrado")
 	}
 }
 

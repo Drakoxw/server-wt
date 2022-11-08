@@ -26,6 +26,9 @@ type IProviderInsert struct {
 	DateReg        string `bson:"dateReg,omitempty"`
 }
 
+type IdValidate struct {
+	Id string `json:"id"`
+}
 type Login struct {
 	Email string `bson:"email,omitempty"`
 	Pass  string `bson:"pass,omitempty"`
