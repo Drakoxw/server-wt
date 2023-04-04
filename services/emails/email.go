@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"os"
 
 	mail "github.com/xhit/go-simple-mail/v2"
 )
@@ -10,10 +11,8 @@ func createServer() (*mail.SMTPClient, error) {
 	server := mail.NewSMTPClient()
 	server.Host = "smtp.gmail.com"
 	server.Port = 587
-	server.Username = "dragon12xw@gmail.com"
-	// server.Username = os.Getenv("FROM_EMAIL")
-	server.Password = "ohbtzgxmivjsvruu"
-	// server.Password = os.Getenv("PASS_EMAIL")
+	server.Username = os.Getenv("FROM_EMAIL")
+	server.Password = os.Getenv("PASS_EMAIL")
 	server.Encryption = mail.EncryptionTLS
 
 	smtpClient, err := server.Connect()
